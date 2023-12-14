@@ -19,14 +19,17 @@ void f_pall(stack_t **head, unsigned int counter)
 		return;
 	}
 
-	while (h)
+	while (h->next != NULL)
 	{
-		printf("%d\n", h->n);
 		h = h->next;
 	}
-}
 
-#include "monty.h"
+	while (h != NULL)
+	{
+		printf("%d\n", h->n);
+		h = h->prev;
+	}
+}
 
 /**
  * f_push - function that adds node to the stack
