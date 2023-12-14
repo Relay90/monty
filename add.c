@@ -1,60 +1,26 @@
 #include "monty.h"
 
 /**
- * f_add - Adds the top two elements of the stack.
- * @stack: Pointer to the head of the stack
- * @line_number: Line number in the file where the operation occurs
+ * f_add - add first 2 elements of the stack
+ * @head: pointer to pointer to first node
+ * @counter: line counter
+ *
+ * Return: none
  */
-void f_add(stack_t **stack, unsigned int line_number)
+void f_add(stack_t **head, unsigned int counter)
 {
-	int sum = (*stack)->n + (*stack)->next->n;
-	int len = 0;
-	stack_t *temp = *stack;
+	stack_t *h;
+	int sum;
 
-	/* Counting the number of elements in the stack */
-	while (temp != NULL)
+	if (!head || !*head || !(*head)->next)
 	{
-		len++;
-		temp = temp->next;
-	}
-
-	if (len < 2)
-	{
-	fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
-	/* Add memory cleanup if necessary */
-	exit(EXIT_FAILURE);
-	}
-	(*stack)->next->n = sum;
-
-	temp = (*stack)->next;
-	(*stack)->next = temp->next;
-	free(temp);
-}
-
-/**
- * addnode - Adds a new node with the given integer to the head of the stack.
- * @head: Pointer to the head of the stack
- * @n: Integer value to be stored in the new node
- */
-void addnode(stack_t **head, int n)
-{
-	stack_t *new_node = malloc(sizeof(stack_t));
-	stack_t *aux = *head;
-
-	if (new_node == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
+		fprintf(stderr, "L%u: can't add, stack too short\n", counter);
 		exit(EXIT_FAILURE);
 	}
 
-	new_node->n = n;
-	new_node->next = aux;
-	new_node->prev = NULL;
-
-	if (aux != NULL)
-	{
-		aux->prev = new_node;
-	}
-
-	*head = new_node;
+	h = *head;
+	sum = h->n + h->next->n;
+	h->next->n = sum;
+	*head = h->next;
+	free(h);
 }

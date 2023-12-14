@@ -1,63 +1,67 @@
 #include "monty.h"
-#include <limits.h>
 
 /**
- * f_pall - prints the stack
- * @head: stack head
- * @counter: no used
- * Return: no return
-*/
+ * f_pall - print everything in stack
+ * @head: pointer to pointer of first node
+ * @counter: line counter
+ *
+ * Return: none
+ */
 void f_pall(stack_t **head, unsigned int counter)
 {
 	stack_t *h;
-	(void)counter;
 
 	h = *head;
+	printf("L%d: ", counter); /* Print the line number */
 	if (h == NULL)
+	{
+		printf("Stack is empty\n");
 		return;
+	}
+
 	while (h)
 	{
 		printf("%d\n", h->n);
 		h = h->next;
 	}
 }
+
+#include "monty.h"
+
 /**
- * f_push - Pushes an element onto the stack or queue
- * @stack: Pointer to the head of the stack
- * @line_number: Line number in the Monty byte code file
+ * f_push - function that adds node to the stack
+ * @head: double head pointer to the stack
+ * @counter: line count
+ *
+ * Return: nothing
  */
-void f_push(stack_t **stack, unsigned int line_number)
+void f_push(stack_t **head, unsigned int counter)
 {
-	int i;
-	int value = 0;
+	int i, m = 0, flag = 0;
 
-	if (bus.arg == NULL)
+	if (bus.arg)
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-	i = 0;
-
-	while (bus.arg[i])
-	{
-		if (!isdigit(bus.arg[i]) && bus.arg[i] != '-')
+		if (bus.arg[0] == '-')
+			m++;
+		for (; bus.arg[m] != '\0'; m++)
 		{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-		}
-		i++;
-	}
-
-	value = atoi(bus.arg);
-
-	if ((value == 0 && bus.arg[0] != '0') || (value == INT_MIN))
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-	if (bus.lifo)
-		addnode(stack, value);
+			if (bus.arg[m] > 57 || bus.arg[m] < 48)
+				flag = 1; }
+		if (flag == 1)
+		{ fprintf(stderr, "L%d: usage: push integer\n", counter);
+			fclose(bus.file);
+			free(bus.content);
+			free_stack(*head);
+			exit(EXIT_FAILURE); }}
 	else
-		addqueue(stack, value);
+	{ fprintf(stderr, "L%d: usage: push integer\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE); }
+	i = atoi(bus.arg);
+	if (bus.lifi == 0)
+		addnode(head, i);
+	else
+		addqueue(head, i);
 }
