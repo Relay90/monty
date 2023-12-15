@@ -32,14 +32,16 @@ void addqueue(stack_t **head, int n)
 	new_node = malloc(sizeof(stack_t));
 
 	if (new_node == NULL)
-	{
-		printf(stderr, "Error: Unable to allocate memory\n");
-		exit(EXIT_FAILURE);
-	}
+		printf("Error\n");
 
 	new_node->n = n;
 	new_node->next = NULL;
 
+	if (temp)
+	{
+		while (temp->next)
+			temp = temp->next;
+	}
 	if (!temp)
 	{
 		*head = new_node;
@@ -47,10 +49,6 @@ void addqueue(stack_t **head, int n)
 	}
 	else
 	{
-		while (temp->next)
-		{
-			temp = temp->next;
-		}
 		temp->next = new_node;
 		new_node->prev = temp;
 	}
@@ -65,8 +63,8 @@ void addqueue(stack_t **head, int n)
 void free_stack(stack_t *head)
 {
 	stack_t *temp;
-
 	temp = head;
+
 	while (head)
 	{
 		temp = head->next;
