@@ -43,17 +43,9 @@ void f_pall(stack_t **head, unsigned int counter)
 {
 	stack_t *h = *head;
 
-	printf("L%d: ", counter); /* Print the line number */
-
-	if (!h)
+	while (current)
 	{
-		printf("Stack is empty\n");
-		return;
-	}
-	while (h)
-	{
-		printf("%d\n", h->n);
-		h = h->next;
+		printf("%d\n", current->n);
+		current = bus.lifi ? current->next : current->prev;
 	}
 }
-
