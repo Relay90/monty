@@ -1,9 +1,11 @@
 #include "monty.h"
 
 /**
- * f_pint - Prints the value at the top of the stack without removing it
- * @head: Double pointer to the top of the stack
- * @counter: Line number in the Monty bytecode file
+ * f_pint - Prints the value at the top of the stack if the stack is not empty.
+ * @head: Pointer to a pointer to the stack structure
+ * @counter: Line number (for error reporting)
+ *
+ * Return: void
  */
 void f_pint(stack_t **head, unsigned int counter)
 {

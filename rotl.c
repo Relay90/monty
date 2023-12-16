@@ -12,7 +12,6 @@ void f_rotl(stack_t **head, unsigned int counter)
 	stack_t *tmp;
 
 	(void)counter;
-
 	if (*head == NULL || (*head)->next == NULL)
 		return;
 
